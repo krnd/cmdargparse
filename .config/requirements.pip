@@ -1,0 +1,34 @@
+# ###################### ENVIRONMENT #######################
+
+# Command line utility to show dependency tree of packages.
+pipdeptree
+
+
+# ###################### DEVELOPMENT #######################
+
+# The uncompromising code formatter.
+black
+# the modular source code checker: pep8 pyflakes and co
+flake8
+# A plugin for flake8 finding likely bugs and design
+# problems in your program. Contains warnings that don't
+# belong in pyflakes and pycodestyle.
+flake8-bugbear
+# A Python utility / library to sort Python imports.
+isort
+
+
+# ###################### BUILD #############################
+
+# Easily download, build, install, upgrade, and uninstall
+# Python packages
+setuptools
+# A simple, correct Python build frontend
+build
+
+
+# ###################### PROJECT ###########################
+
+# cmd2 - quickly build feature-rich and user-friendly
+# interactive command line applications in Python
+cmd2 ~=2.7

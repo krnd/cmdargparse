@@ -1,0 +1,3 @@
+{
+    "python.venv.requirements": ".config/requirements.lock"
+}
