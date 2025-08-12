@@ -1,7 +1,6 @@
 from typing import Literal, Optional
 
 import cmd2
-import cmdutil
 
 from cmdargparse import cmdargument, cmdcommand, cmdfield
 

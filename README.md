@@ -30,6 +30,8 @@ class MyApplication(cmd2.Cmd):
 
 ```
 
+*[Example Application](./launch/__main__.py)*
+
 
 ### Arguments (positional)
 
