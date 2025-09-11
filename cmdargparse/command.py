@@ -36,6 +36,9 @@ class _cmdcommand(type):
     ]:
         """Decorate as command function."""
 
+        if hasattr(argtype, "_cmdargparse_command_decorator"):
+            return getattr(argtype, "_cmdargparse_command_decorator")
+
         parser = ArgumentParser()
 
         _dcfields = dataclasses.fields(
@@ -92,10 +95,16 @@ class _cmdcommand(type):
 
             parser.add_argument(*name_or_flags, **args)
 
-        return cmd2.with_argparser(
-            parser,
-            ns_provider=cls.namespace_provider(argtype),
-        )  # type: ignore
+        setattr(
+            argtype,
+            "_cmdargparse_command_decorator",
+            _cmdargparse_command_decorator := cmd2.with_argparser(
+                parser,
+                ns_provider=cls.namespace_provider(argtype),
+            ),
+        )
+
+        return _cmdargparse_command_decorator  # type: ignore
 
     # ################## HELPERS ###########################
 
