@@ -27,6 +27,12 @@ setuptools
 build
 
 
+# ###################### PUBLISH ###########################
+
+# Collection of utilities for publishing packages on PyPI
+twine
+
+
 # ###################### PROJECT ###########################
 
 # cmd2 - quickly build feature-rich and user-friendly
