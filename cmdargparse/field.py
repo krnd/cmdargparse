@@ -5,6 +5,7 @@ from typing import (
     Annotated,
     Any,
     Callable,
+    Collection,
     Literal,
     Mapping,
     NamedTuple,
@@ -140,7 +141,7 @@ class _cmdfield(type):
     def argument(
         cls,
         /,
-        choices: Sequence[T],
+        choices: Collection[T],
         choicesmap: Mapping[T, T] | None = ...,
         # *,
         **args: Unpack[_ArgumentArgs],
@@ -151,7 +152,7 @@ class _cmdfield(type):
     def argument(
         cls,
         /,
-        choices: Sequence[T],
+        choices: Collection[T],
         choicesmap: Mapping[T, T] | None = ...,
         *,
         default: TONCE,
@@ -161,7 +162,7 @@ class _cmdfield(type):
     def argument(
         cls,
         /,
-        choices: Sequence[T] | None = None,
+        choices: Collection[T] | None = None,
         choicesmap: Mapping[T, T] | None = None,
         *,
         default: TONCE | Unset = ~Unset,
@@ -283,7 +284,7 @@ class _cmdfield(type):
     def option(
         cls,
         /,
-        choices: Sequence[T],
+        choices: Collection[T],
         choicesmap: Mapping[T, T] | None = ...,
         # *,
         **args: Unpack[_OptionArgs],
@@ -295,7 +296,7 @@ class _cmdfield(type):
         cls,
         decl: str,
         /,
-        choices: Sequence[T],
+        choices: Collection[T],
         choicesmap: Mapping[T, T] | None = ...,
         # *,
         **args: Unpack[_OptionArgs],
@@ -308,7 +309,7 @@ class _cmdfield(type):
         decl: str,
         altdecl: str,
         /,
-        choices: Sequence[T],
+        choices: Collection[T],
         choicesmap: Mapping[T, T] | None = ...,
         # *,
         **args: Unpack[_OptionArgs],
@@ -319,7 +320,7 @@ class _cmdfield(type):
     def option(
         cls,
         /,
-        choices: Sequence[T],
+        choices: Collection[T],
         choicesmap: Mapping[T, T] | None = ...,
         *,
         default: TONCE,
@@ -332,7 +333,7 @@ class _cmdfield(type):
         cls,
         decl: str,
         /,
-        choices: Sequence[T],
+        choices: Collection[T],
         choicesmap: Mapping[T, T] | None = ...,
         *,
         default: TONCE,
@@ -346,7 +347,7 @@ class _cmdfield(type):
         decl: str,
         altdecl: str,
         /,
-        choices: Sequence[T],
+        choices: Collection[T],
         choicesmap: Mapping[T, T] | None = ...,
         *,
         default: TONCE,
@@ -358,7 +359,7 @@ class _cmdfield(type):
         decl: str | None = None,
         altdecl: str | None = None,
         /,
-        choices: Sequence[T] | None = None,
+        choices: Collection[T] | None = None,
         choicesmap: Mapping[T, T] | None = None,
         *,
         default: TONCE | Unset = ~Unset,
@@ -647,7 +648,7 @@ if TYPE_CHECKING:
             Annotated[None, "<unspecified>"],
         ] = ...,
         choices: Union[
-            Sequence[Annotated[Any, T]],
+            Collection[Annotated[Any, T]],
             Annotated[None, "<unspecified>"],
         ] = ...,
         required: Union[
@@ -724,7 +725,8 @@ def _decls(
         (_decl, _altdecl) = (
             (decls, None)
             if isinstance(decls, str)
-            else decls  # <format-break>
+            else decls
+            # <format-break>
         )
         if (
             (_decl and not _decl.startswith("-"))
