@@ -8,7 +8,8 @@ setup(
     author="Kilian Kaiping (krnd)",
     url="https://github.com/krnd/cmdargparse",
     license="MIT",
-    packages=find_packages(include="cmdargparse"),
+    packages=find_packages(include=["cmdargparse"]),
+    # Tested with Python 3.13 only.
     python_requires=">=3.13",
     install_requires=[
         ("cmd2" "~=2.7"),
