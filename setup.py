@@ -1,10 +1,16 @@
 from setuptools import find_packages, setup
 
 
+with open("README.md", "r", encoding="utf-8") as file:
+    README = file.read()
+
+
 setup(
     name="cmdargparse",
     version="0.0.0",
     description="A declarative way to define `cmd2` argument parsers.",
+    long_description=README,
+    long_description_content_type="text/markdown",
     author="Kilian Kaiping (krnd)",
     url="https://github.com/krnd/cmdargparse",
     license="MIT",
@@ -23,12 +29,6 @@ setup(
         "Python",
     ],
     classifiers=[
-        # "Development Status :: 3 - Alpha"
-        #   The project is a work-in-progress. It may have a basic feature set but is likely
-        #   unstable and not suitable for production use.
-        # "Development Status :: 4 - Beta"
-        #   The project is feature-complete but still needs testing and bug-fixing. It is fairly
-        #   stable but not yet considered production-ready.
         "Development Status :: 3 - Alpha",
         "Environment :: Console",
         "Environment :: Plugins",
