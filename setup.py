@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as file:
 
 setup(
     name="cmdargparse",
-    version="0.0.0",
+    version="0.1.0",
     description="A declarative way to define `cmd2` argument parsers.",
     long_description=README,
     long_description_content_type="text/markdown",
