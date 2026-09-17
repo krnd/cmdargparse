@@ -427,7 +427,6 @@ class _cmdfield(type):
             )  # type: ignore
         return _argparse(
             _decls(decl, altdecl, args),
-            nargs=("?" if not isunset(default) else None),
             choices=choices,
             choicesmap=choicesmap,
             default=on_unset(default, None),
