@@ -22,16 +22,19 @@ class Namespace(argparse.Namespace):
             )
         )
 
+        cmd.pfeedback("[Namespace]")
+
+        if not fields:
+            cmd.pfeedback("  (no fields)")
+            return
+
         maxlen = max(
             len(attr)
             for attr in fields
             # <format-break>
         )
 
-        cmd.pfeedback("[Namespace]")
         for name in fields:
             cmd.pfeedback(
                 f"  {str.ljust(name, maxlen)!s} :  {self.__dict__[name]!r}"
             )
-        if not fields:
-            cmd.pfeedback("  (no fields)")
