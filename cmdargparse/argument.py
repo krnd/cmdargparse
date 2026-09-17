@@ -72,7 +72,7 @@ class _cmdargument(type):
         if _cls is None:
             return functools.partial(
                 cls.__call__,
-                default=form,
+                form=form,
             )  # type: ignore
 
         setattr(
