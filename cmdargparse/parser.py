@@ -9,7 +9,7 @@ import cmd2
 class ArgumentParser(cmd2.Cmd2ArgumentParser):
 
     # Registers a custom argparse argument parameter.
-    #   https://cmd2.readthedocs.io/en/stable/api/argparse_custom/#cmd2.argparse_custom.register_argparse_argument_parameter
+    #   https://cmd2.readthedocs.io/en/stable/api/argparse_utils/#cmd2.argparse_utils.register_argparse_argument_parameter
     #   ```
     #     def register_argparse_argument_parameter(
     #         param_name: str,
@@ -22,7 +22,7 @@ class ArgumentParser(cmd2.Cmd2ArgumentParser):
         *args: Annotated[Any, "passthrough"],
         **kwargs: Annotated[Any, "passthrough"],
     ) -> None:
-        super(cmd2.Cmd2ArgumentParser, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         from .actions import StoreAction
 

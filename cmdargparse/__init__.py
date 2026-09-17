@@ -7,4 +7,4 @@ from .namespace import Namespace
 from .parser import ArgumentParser
 
 
-_cmd2.set_default_argument_parser_type(ArgumentParser)
+_cmd2.set_default_argument_parser(ArgumentParser)

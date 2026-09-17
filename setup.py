@@ -18,7 +18,7 @@ setup(
     # Tested with Python 3.13 only.
     python_requires=">=3.13",
     install_requires=[
-        ("cmd2" "~=2.7"),
+        ("cmd2" "~=4.2"),
     ],
     keywords=[
         "CLI",

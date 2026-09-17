@@ -37,4 +37,4 @@ twine
 
 # cmd2 - quickly build feature-rich and user-friendly
 # interactive command line applications in Python
-cmd2 ~=2.7
+cmd2 ~=4.2
