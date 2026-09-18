@@ -44,6 +44,7 @@ class _cmdcommand(type):
         _dcfields = dataclasses.fields(
             argtype  # pyright: ignore[reportArgumentType]
         )
+        _fieldtypes = typing.get_type_hints(argtype, include_extras=True)
 
         default_form: _DeclFormSpecifier
         default_form = getattr(argtype, "_cmdargparse_default_form")
@@ -87,7 +88,7 @@ class _cmdcommand(type):
 
             # Resolve the type from the fields type annotation.
             if args.get("type", None) is None:
-                args["type"] = argparse_type(field.type)
+                args["type"] = argparse_type(_fieldtypes[field.name])
 
             # Remove custom unspecified arguments.
             if args.get("choicesmap", None) is None:
@@ -177,9 +178,6 @@ def argparse_name_or_flags(
 
 
 def argparse_type(type: Any, /) -> Type[Any]:
-    if isinstance(type, str):
-        raise TypeError("forward reference type annotations are not supported")
-
     origin = typing.get_origin(type)
     if origin is None:
         return type
