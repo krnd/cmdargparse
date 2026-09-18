@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as file:
 
 setup(
     name="cmdargparse",
-    version="0.1.0",
+    version="0.2.0",
     description="A declarative way to define `cmd2` argument parsers.",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -15,8 +15,8 @@ setup(
     url="https://github.com/krnd/cmdargparse",
     license="MIT",
     packages=find_packages(include=["cmdargparse", "cmdargparse.*"]),
-    # Tested with Python 3.13 only.
-    python_requires=">=3.13",
+    # Tested with Python 3.14 only.
+    python_requires=">=3.14",
     install_requires=[
         ("cmd2" "~=4.2"),
     ],
@@ -36,7 +36,7 @@ setup(
         "Intended Audience :: System Administrators",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
 )
