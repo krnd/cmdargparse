@@ -12,7 +12,7 @@ The package provides a declarative way to define `cmd2` argument parsers.
 The core functionality is driven by three components:
 * `cmdargument` for defining an argument parser
 * `cmdfield` for declaring the arguments
-* `cmdcommand` for attatching an argument parser to a command
+* `cmdcommand` for attaching an argument parser to a command
 
 ```py
 
@@ -22,7 +22,7 @@ class MyApplication(cmd2.Cmd):
     class _MyCommandArgs(cmdargument):
         my_argument: str = cmdfield.argument(...)
         my_option: str = cmdfield.option(...)
-        my_flag: str = cmdfield.flag(...)
+        my_flag: bool = cmdfield.flag(...)
 
     @cmdcommand(_MyCommandArgs)
     def do_mycommand(self, args: _MyCommandArgs) -> None:
@@ -133,6 +133,7 @@ tt: str | None = cmdfield.option(more_decls="-uu")       # -tt, -uu
     Specifies additional flag declarations.
 * `type` <br/>
     Explicitly specifies the type to be used by argparse.
+    <br/> (Has no effect, as flag values are not type converted.)
     <br/> https://docs.python.org/3/library/argparse.html#type
 * `help` <br/>
     Brief description of the flag.
