@@ -43,6 +43,9 @@ class MyApplication(cmd2.Cmd):
 * `default` <br/>
     The arguments default value if not specified.
     <br/> (Providing a default value makes the argument optional.)
+* `nargs` <br/>
+    The number of command-line values to be consumed.
+    <br/> https://docs.python.org/3/library/argparse.html#nargs
 * `type` <br/>
     Explicitly specifies the `type` to be used by `argparse`.
     <br/> https://docs.python.org/3/library/argparse.html#type
@@ -61,6 +64,8 @@ arg: str | None = cmdfield.argument(
     },
     default=None,
 )
+args: list[str] = cmdfield.argument()
+more: list[str] = cmdfield.argument(nargs="+")
 ```
 
 
@@ -83,6 +88,9 @@ arg: str | None = cmdfield.argument(
     Explicitly specifies all option declarations.
 * `more_decls` <br/>
     Specifies additional option declarations.
+* `nargs` <br/>
+    The number of command-line values to be consumed.
+    <br/> https://docs.python.org/3/library/argparse.html#nargs
 * `type` <br/>
     Explicitly specifies the `type` to be used by `argparse`.
     <br/> https://docs.python.org/3/library/argparse.html#type
@@ -98,6 +106,8 @@ arg: str | None = cmdfield.argument(
 xx: str | None = cmdfield.option()
 yy: int | None = cmdfield.option([1, 2, 3])
 zz: str = cmdfield.option(required=True)
+hh: list[str] | None = cmdfield.option(default=None)
+qq: list[int] | None = cmdfield.option(nargs=2, default=None)
 ```
 
 #### Declarations
@@ -112,6 +122,7 @@ mm: str | None = cmdfield.option(decls="--mm")           # --mm
 nn: str | None = cmdfield.option(decls="-oo")            # -oo
 pp: str | None = cmdfield.option(decls=("--rr", "-ss"))  # --rr, -ss
 tt: str | None = cmdfield.option(more_decls="-uu")       # -tt, -uu
+vv_ww: str | None = cmdfield.option()                    # -vv-ww  OR  --vv-ww
 ```
 
 
@@ -159,6 +170,7 @@ mm: bool = cmdfield.flag(decls="--mm")           # --mm
 nn: bool = cmdfield.flag(decls="-oo")            # -oo
 pp: bool = cmdfield.flag(decls=("--rr", "-ss"))  # --rr, -ss
 tt: bool = cmdfield.flag(more_decls="-uu")       # -tt, -uu
+vv_ww: bool = cmdfield.flag()                    # -vv-ww  OR  --vv-ww
 ```
 
 

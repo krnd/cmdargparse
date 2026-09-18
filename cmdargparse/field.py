@@ -184,6 +184,7 @@ class _cmdfield(type):
 
         :param nargs:
             The number of command-line values to be consumed.
+            <br/> https://docs.python.org/3/library/argparse.html#nargs
         :param type:
             Explicitly specifies the `type` to be used by `argparse`.
             <br/> https://docs.python.org/3/library/argparse.html#type
@@ -396,6 +397,7 @@ class _cmdfield(type):
 
         :param nargs:
             The number of command-line values to be consumed.
+            <br/> https://docs.python.org/3/library/argparse.html#nargs
         :param type:
             Explicitly specifies the `type` to be used by `argparse`.
             <br/> https://docs.python.org/3/library/argparse.html#type
