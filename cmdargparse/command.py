@@ -63,7 +63,7 @@ class _cmdcommand(type):
             )
 
             args: dict[str, Any]
-            args = field.metadata["args"]
+            args = dict(field.metadata["args"])
 
             assert "dest" not in args, (
                 "Specifying 'dest' directly is not supported."
