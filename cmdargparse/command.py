@@ -87,8 +87,11 @@ class _cmdcommand(type):
                 continue
 
             # Resolve the type from the fields type annotation.
+            (_type, _nargs) = argparse_type(_fieldtypes[field.name])
             if args.get("type", None) is None:
-                args["type"] = argparse_type(_fieldtypes[field.name])
+                args["type"] = _type
+            if args.get("nargs", None) is None and _nargs is not None:
+                args["nargs"] = _nargs
 
             # Remove custom unspecified arguments.
             if args.get("choicesmap", None) is None:
@@ -177,10 +180,10 @@ def argparse_name_or_flags(
     )
 
 
-def argparse_type(type: Any, /) -> Type[Any]:
+def argparse_type(type: Any, /) -> Tuple[Type[Any], str | None]:
     origin = typing.get_origin(type)
     if origin is None:
-        return type
+        return (type, None)
 
     if origin is typing.Annotated:
         (argtype, *_) = typing.get_args(type)
@@ -190,9 +193,12 @@ def argparse_type(type: Any, /) -> Type[Any]:
     # should be passed to the `argparse` module.
     if isinstance(type, types.UnionType):
         (argtype, *_) = typing.get_args(type)
-        return argtype
+        return argparse_type(argtype)
     elif origin is typing.Union:
         (argtype, *_) = typing.get_args(type)
-        return argtype
+        return argparse_type(argtype)
+    elif origin is list:
+        (argtype, *_) = typing.get_args(type)
+        return (argparse_type(argtype)[0], "*")
 
     raise TypeError("unsupported type annotation")
