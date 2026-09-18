@@ -112,6 +112,8 @@ class _cmdfield(type):
 
     class _ArgumentArgs(TypedDict, total=False):
 
+        nargs: Annotated[int, "N"] | Literal["?", "*", "+"]
+
         type: Annotated[Any, Callable[[str], Annotated[Any, "FieldType"]]]
 
         help: str
@@ -180,6 +182,8 @@ class _cmdfield(type):
             The arguments default value if not specified.
             (Providing a default value makes the argument optional.)
 
+        :param nargs:
+            The number of command-line values to be consumed.
         :param type:
             Explicitly specifies the `type` to be used by `argparse`.
             <br/> https://docs.python.org/3/library/argparse.html#type
@@ -192,10 +196,10 @@ class _cmdfield(type):
         """
         return _argparse(
             None,
-            nargs=("?" if not isunset(default) else None),
             choices=choices,
             choicesmap=choicesmap,
             default=on_unset(default, None),
+            nargs=args.get("nargs", ("?" if not isunset(default) else None)),
             type=args.get("type", None),
             help=args.get("help", None),
             metavar=args.get("helpvar", None),
@@ -208,6 +212,8 @@ class _cmdfield(type):
         form: _DeclFormSpecifier
         decls: Tuple[str, str] | str
         more_decls: Sequence[str] | str
+
+        nargs: Annotated[int, "N"] | Literal["?", "*", "+"]
 
         type: Annotated[Any, Callable[[str], Annotated[Any, "FieldType"]]]
 
@@ -388,6 +394,8 @@ class _cmdfield(type):
         :param more_decls:
             Specifies additional option declarations.
 
+        :param nargs:
+            The number of command-line values to be consumed.
         :param type:
             Explicitly specifies the `type` to be used by `argparse`.
             <br/> https://docs.python.org/3/library/argparse.html#type
@@ -431,6 +439,7 @@ class _cmdfield(type):
             choicesmap=choicesmap,
             default=on_unset(default, None),
             required=args.get("required", False),
+            nargs=args.get("nargs", None),
             type=args.get("type", None),
             help=args.get("help", None),
             metavar=args.get("helpvar", None),
