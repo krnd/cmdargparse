@@ -3,20 +3,11 @@
 
 # ################################ TASKS #######################################
 
-# ###################### SETUP #############################
-
-TASK setup          python:venv:setup
-
-TASK requirements   python:venv:compile
+TASK build python:setuptools:build
 
 
-# ###################### BUILD #############################
+# ###################### ENVIRONMENT #######################
 
-TASK build          python:setuptools:build
+TASK env:setup python:venv:setup
 
-
-# ###################### CLEAN #############################
-
-TASK clean          ...
-
-TASK purge!         clean, python:venv:purge
+TASK env:purge python:venv:purge

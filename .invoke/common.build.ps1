@@ -1,4 +1,4 @@
-# common.build.ps1 1.0
+# common.build.ps1 1.1
 #Requires -Version 5.1
 
 
@@ -6,7 +6,7 @@
 
 function __InvokeBuild::IsTaskDefined {
     [CmdletBinding(PositionalBinding = $false)]
-    param (
+    param(
         [Parameter(Mandatory, Position = 0)]
         [string]
         $Name
@@ -16,7 +16,7 @@ function __InvokeBuild::IsTaskDefined {
 
 function __InvokeBuild::IsTaskMissing {
     [CmdletBinding(PositionalBinding = $false)]
-    param (
+    param(
         [Parameter(Mandatory, Position = 0)]
         [string]
         $Name
@@ -47,7 +47,7 @@ TASK ...
 # ###################### File Manager ######################
 
 TASK / {
-    $Platform = $PSVersionTable.Platform
+    $Platform = $PSVersionTable['Platform']
     if ($null -eq $Platform) {
         EXEC { explorer . }
     } elseif ($Platform -eq "Win32NT") {

@@ -1,4 +1,4 @@
-# config.plugin.ps1 1.3
+# config.plugin.ps1 1.5
 #Requires -Version 5.1
 
 
@@ -75,7 +75,7 @@ INVOKEBUILD:SETUP {
 
 function __InvokeBuild::Plugin::Config::*LOAD {
     [CmdletBinding(PositionalBinding = $false)]
-    param (
+    param(
         [Parameter(Mandatory, Position = 0, ParameterSetName = "Values")]
         [hashtable]
         $Values,
@@ -107,7 +107,7 @@ Set-Alias CONFIG:LOAD __InvokeBuild::Plugin::Config::*LOAD
 
 function __InvokeBuild::Plugin::Config::*VALUE {
     [CmdletBinding(PositionalBinding = $false)]
-    param (
+    param(
         [Parameter(Mandatory, Position = 0)]
         [string]
         $Name,
@@ -132,7 +132,7 @@ Set-Alias CONFIGURE __InvokeBuild::Plugin::Config::*VALUE
 
 function __InvokeBuild::Plugin::Config::*HAS {
     [CmdletBinding(PositionalBinding = $false)]
-    param (
+    param(
         [Parameter(Mandatory, Position = 0)]
         [string]
         $Name
@@ -141,14 +141,15 @@ function __InvokeBuild::Plugin::Config::*HAS {
     $PLUGIN = $INVOKE::Plugin::Config
     $STORAGE = $PLUGIN::Storage
 
-    return $STORAGE.ContainsKey($Name)
+    return $STORAGE.ContainsKey($Name) `
+        -and ($null -ne $STORAGE[$Name])
 }
 
 Set-Alias CONFIG:HAS __InvokeBuild::Plugin::Config::*HAS
 
 function __InvokeBuild::Plugin::Config::*SET {
     [CmdletBinding(PositionalBinding = $false)]
-    param (
+    param(
         [Parameter(Mandatory, Position = 0)]
         [string]
         $Name,
@@ -168,16 +169,20 @@ Set-Alias CONFIG:SET __InvokeBuild::Plugin::Config::*SET
 
 function __InvokeBuild::Plugin::Config::*GET {
     [CmdletBinding(PositionalBinding = $false)]
-    param (
+    param(
         [Parameter(Mandatory, Position = 0)]
         [string]
-        $Name
+        $Name,
+        [Parameter()]
+        [object]
+        $Default = $null
     )
     $INVOKE = $script:__InvokeBuild
     $PLUGIN = $INVOKE::Plugin::Config
     $STORAGE = $PLUGIN::Storage
 
     if (-not $STORAGE.ContainsKey($Name)) {
+        if ($null -ne $Default) { return $Default }
         throw "[$($PLUGIN::Prefix):GET] " `
             + "Configuration value '$Name' not found."
     }
@@ -200,7 +205,7 @@ Set-Alias CONF __InvokeBuild::Plugin::Config::*GET
 
 function __InvokeBuild::Plugin::Config::Load {
     [CmdletBinding(PositionalBinding = $false)]
-    param (
+    param(
         [Parameter(Mandatory, Position = 0)]
         [string]
         $Source,

@@ -1,9 +1,10 @@
+# .build.ps1 1.1
 #Requires -Version 5.1
 
 
 # ################################ ARGUMENTS ###################################
 [CmdletBinding()]
-param (
+param(
     [Parameter(ValueFromRemainingArguments)]
     [string[]]
     $InvokeBuildRemainingArguments
@@ -27,9 +28,12 @@ $script:__InvokeBuild = @{
         ".",
         ".invoke",
         ".invokebuild",
+        ".invokerunner",
         "invoke",
         "invokebuild",
-        "invoke-build"
+        "invokerunner",
+        "invoke-build",
+        "invoke-runner"
     )
 }
 
@@ -38,7 +42,7 @@ $script:__InvokeBuild = @{
 
 function __InvokeBuild::*SETUP {
     [CmdletBinding(PositionalBinding = $false, DefaultParameterSetName = "script")]
-    param (
+    param(
         [Parameter(Mandatory, Position = 0, ParameterSetName = "script")]
         [scriptblock]
         $Script,
