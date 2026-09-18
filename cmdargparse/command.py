@@ -169,7 +169,7 @@ def argparse_name_or_flags(
     return tuple(
         _decl
         for _decl in (
-            decl or (form + field),
+            decl or (form + field.replace("_", "-")),
             altdecl,
             *more_decls,
         )
