@@ -401,29 +401,29 @@ class _cmdfield(type):
             Reference name of the option value in the help message.
 
         """
-        if decl is None:
-            decl, altdecl, choices = (
-                # 0 arguments
-                (None, None, None)
+        if (
+            choices is None
+            and (decl is None or isinstance(decl, str))
+            and (altdecl is None or isinstance(altdecl, str))
+        ):
+            decl, altdecl, choices, choicesmap = (
+                # option
+                (decl, altdecl, None, None)
             )  # type: ignore
-        elif altdecl is None:
-            decl, altdecl, choices = (
-                # 1 argument
-                (decl, None, None)
-                if isinstance(decl, str)
-                else (None, None, decl)
+        elif decl is not None and not isinstance(decl, str):
+            decl, altdecl, choices, choicesmap = (
+                # choice option [derived]
+                (None, None, decl, altdecl)
             )  # type: ignore
-        elif choices is None:
-            decl, altdecl, choices = (
-                # 2 arguments
-                (decl, altdecl, None)
-                if isinstance(decl, str)
-                else (decl, None, altdecl)
+        elif altdecl is not None and not isinstance(altdecl, str):
+            decl, altdecl, choices, choicesmap = (
+                # choice option [augmented]
+                (decl, None, altdecl, choices)
             )  # type: ignore
         else:
-            decl, altdecl, choices = (
-                # 3 arguments
-                (decl, altdecl, choices)
+            decl, altdecl, choices, choicesmap = (
+                # choice option [augmented]
+                (decl, altdecl, choices, choicesmap)
             )  # type: ignore
         return _argparse(
             _decls(decl, altdecl, args),
