@@ -36,8 +36,8 @@ class _cmdcommand(type):
     ]:
         """Decorate as command function."""
 
-        if hasattr(argtype, "_cmdargparse_command_decorator"):
-            return getattr(argtype, "_cmdargparse_command_decorator")
+        if "_cmdargparse_command_decorator" in argtype.__dict__:
+            return argtype.__dict__["_cmdargparse_command_decorator"]
 
         parser = ArgumentParser()
 
