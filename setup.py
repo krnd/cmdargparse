@@ -15,8 +15,7 @@ setup(
     url="https://github.com/krnd/cmdargparse",
     license="MIT",
     packages=find_packages(include=["cmdargparse", "cmdargparse.*"]),
-    # Tested with Python 3.14 only.
-    python_requires=">=3.14",
+    python_requires=">=3.13",
     install_requires=[
         ("cmd2" "~=4.2"),
     ],
@@ -36,6 +35,7 @@ setup(
         "Intended Audience :: System Administrators",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: 3.14",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
