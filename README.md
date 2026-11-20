@@ -174,6 +174,45 @@ vv_ww: bool = cmdfield.flag()                    # -vv-ww  OR  --vv-ww
 ```
 
 
+### Subcommands
+
+* `subcommands` <br/>
+    Allows subcommands to be attached to the command.
+* `subcommand_to` <br/>
+    Attaches the command as a subcommand to the specified command.
+    <br/> *Named after the function `*_<name>`, or explicitly via
+    `(command, name)`.*
+
+#### Arguments
+Subcommands also get the arguments of their parent commands and the constants
+of the root command.
+
+Inheritance cannot be used to share options between subcommands.
+
+#### Examples
+```py
+@cmdcommand(_MyCommandArgs, subcommands=True)
+def do_mycommand(self, args: _MyCommandArgs) -> None:
+    args.cmd2_subcommand_func(args)
+
+@cmdargument
+class _MySubArgs(_MyCommandArgs): ...
+
+@cmdcommand(_MySubArgs, subcommand_to="mycommand")                      # mycommand mysub
+def mycommand_mysub(self, args: _MySubArgs) -> None: ...
+
+@cmdcommand(_MySubArgs, subcommand_to=("mycommand", "my-sub"))          # mycommand my-sub
+def mycommand_my_sub(self, args: _MySubArgs) -> None: ...
+
+@cmdcommand(_MyGroupArgs, subcommands=True, subcommand_to="mycommand")  # mycommand mygroup
+def mycommand_mygroup(self, args: _MyGroupArgs) -> None:
+    args.cmd2_subcommand_func(args)
+
+@cmdcommand(_MySubArgs, subcommand_to="mycommand mygroup")              # mycommand mygroup mysub
+def mycommand_mygroup_mysub(self, args: _MySubArgs) -> None: ...
+```
+
+
 ## Q&A
 <!----------------------------------------------------------------------------->
 
