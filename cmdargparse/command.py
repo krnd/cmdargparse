@@ -39,9 +39,6 @@ class _cmdcommand(type):
     ]:
         """Decorate as command function."""
 
-        if "_cmdargparse_command_decorator" in argtype.__dict__:
-            return argtype.__dict__["_cmdargparse_command_decorator"]
-
         parser = ArgumentParser()
 
         _dcfields = dataclasses.fields(
@@ -109,17 +106,13 @@ class _cmdcommand(type):
                 required=True,
             )
 
-        setattr(
-            argtype,
-            "_cmdargparse_command_decorator",
-            _cmdargparse_command_decorator := (
-                cmd2.with_argparser(
-                    parser,
-                    ns_provider=cls.namespace_provider(argtype),
-                )
-                if subcommand_to is None
-                else cls.subcommand_decorator(parser, subcommand_to)
-            ),
+        _cmdargparse_command_decorator = (
+            cmd2.with_argparser(
+                parser,
+                ns_provider=cls.namespace_provider(argtype),
+            )
+            if subcommand_to is None
+            else cls.subcommand_decorator(parser, subcommand_to)
         )
 
         return _cmdargparse_command_decorator  # type: ignore
