@@ -145,7 +145,17 @@ class _cmdcommand(type):
 
                 (_, _, subcommand) = func.__name__.rpartition("_")
 
-            return cmd2.as_subcommand_to(command, subcommand, parser)(func)
+            if func.__doc__:
+                help = cmd2.utils.strip_doc_annotations(func.__doc__)
+            else:
+                help = None
+
+            return cmd2.as_subcommand_to(
+                command,
+                subcommand,
+                parser,
+                help=help,
+            )(func)
 
         return _decorator
 
