@@ -30,6 +30,9 @@ class _cmdcommand(type):
         cls,
         argtype: Type[TARGUMENT],
         /,
+        *,
+        subcommands: bool = False,
+        subcommand_to: str | Tuple[str, str] | None = None,
     ) -> Callable[
         [Callable[[TSELF, TARGUMENT], TRETURN]],
         Callable[[TSELF, TARGUMENT], TRETURN],
@@ -99,18 +102,48 @@ class _cmdcommand(type):
 
             parser.add_argument(*name_or_flags, **args)
 
+        if subcommands:
+            parser.add_subparsers(
+                title="subcommands",
+                metavar="SUBCOMMAND",
+                required=True,
+            )
+
         setattr(
             argtype,
             "_cmdargparse_command_decorator",
-            _cmdargparse_command_decorator := cmd2.with_argparser(
-                parser,
-                ns_provider=cls.namespace_provider(argtype),
+            _cmdargparse_command_decorator := (
+                cmd2.with_argparser(
+                    parser,
+                    ns_provider=cls.namespace_provider(argtype),
+                )
+                if subcommand_to is None
+                else cls.subcommand_decorator(parser, subcommand_to)
             ),
         )
 
         return _cmdargparse_command_decorator  # type: ignore
 
     # ################## HELPERS ###########################
+
+    @staticmethod
+    def subcommand_decorator(
+        parser: ArgumentParser,
+        subcommand_to: Tuple[str, str] | str,
+        /,
+    ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+        def _decorator(func: Callable[..., Any]) -> Callable[..., Any]:
+            if isinstance(subcommand_to, tuple):
+                (command, subcommand) = subcommand_to
+
+            else:
+                command = subcommand_to
+
+                (_, _, subcommand) = func.__name__.rpartition("_")
+
+            return cmd2.as_subcommand_to(command, subcommand, parser)(func)
+
+        return _decorator
 
     @staticmethod
     def namespace_provider(
