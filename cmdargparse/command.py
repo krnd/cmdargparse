@@ -46,6 +46,17 @@ class _cmdcommand(type):
         )
         _fieldtypes = typing.get_type_hints(argtype, include_extras=True)
 
+        if subcommand_to is not None:
+            _inherited = {
+                field.name
+                for base in argtype.__bases__
+                if dataclasses.is_dataclass(base)
+                for field in dataclasses.fields(base)
+            }
+            _dcfields = tuple(
+                field for field in _dcfields if field.name not in _inherited
+            )
+
         default_form: _DeclFormSpecifier
         default_form = getattr(argtype, "_cmdargparse_default_form")
 
