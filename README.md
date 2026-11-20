@@ -183,6 +183,9 @@ vv_ww: bool = cmdfield.flag()                    # -vv-ww  OR  --vv-ww
     <br/> *Named after the function `*_<name>`, or explicitly via
     `(command, name)`.*
 
+Subcommands can be called via `args.subcommand()` instead of
+`args.cmd2_subcommand_func(args)`.
+
 #### Arguments
 Subcommands also get the arguments of their parent commands and the constants
 of the root command.
@@ -193,7 +196,7 @@ Inheritance cannot be used to share options between subcommands.
 ```py
 @cmdcommand(_MyCommandArgs, subcommands=True)
 def do_mycommand(self, args: _MyCommandArgs) -> None:
-    args.cmd2_subcommand_func(args)
+    args.subcommand()
 
 @cmdargument
 class _MySubArgs(_MyCommandArgs): ...
@@ -206,7 +209,7 @@ def mycommand_my_sub(self, args: _MySubArgs) -> None: ...
 
 @cmdcommand(_MyGroupArgs, subcommands=True, subcommand_to="mycommand")  # mycommand mygroup
 def mycommand_mygroup(self, args: _MyGroupArgs) -> None:
-    args.cmd2_subcommand_func(args)
+    args.subcommand()
 
 @cmdcommand(_MySubArgs, subcommand_to="mycommand mygroup")              # mycommand mygroup mysub
 def mycommand_mygroup_mysub(self, args: _MySubArgs) -> None: ...

@@ -1,4 +1,5 @@
 import argparse
+from typing import Any
 
 import cmd2
 
@@ -7,6 +8,18 @@ import cmd2
 
 
 class Namespace(argparse.Namespace):
+
+    def subcommand(self) -> Any:
+        """Calls the selected subcommand."""
+
+        # The function is 'None' for commands without subcommands.
+        if self.cmd2_subcommand_func is None:
+            raise RuntimeError(
+                f"Command '{self.cmd2_statement.command}' does not have "
+                "subcommands"
+            )
+
+        return self.cmd2_subcommand_func(self)
 
     def pfields(self, cmd: cmd2.Cmd, /) -> None:
         """Prints all fields using the feedback output function."""
